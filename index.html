@@ -1198,6 +1198,11 @@ canvas.lb-skin:active { opacity:0.6; }
 </style>
 </head>
 <body>
+<script>
+  if (location.hash !== '#golf2026') {
+    document.documentElement.innerHTML = '<h2 style="font-family:sans-serif;padding:2rem">Access denied</h2>';
+  }
+</script>
 
 <!-- Firebase SDK -->
 <!-- ██ INTERNAL TEST BUILD — NOT FOR PRODUCTION ██
