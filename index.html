@@ -164,6 +164,18 @@ html, body { background:#0a0a0f; width:100%; height:100%; overflow:hidden; touch
 #aimBtn.active   { background:rgba(255,255,255,0.12); border-color:#ffffff; color:#ffffff; box-shadow:0 0 12px rgba(255,255,255,0.4); }
 #aimBtn.used     { opacity:0.38; pointer-events:none; position:relative; }
 #aimBtn.used::after { content:'✕'; position:absolute; font-size:10px; top:3px; right:3px; color:#888; }
+#aimBtn          { position:fixed; }
+#aimBadge {
+  position:absolute; top:-6px; right:-6px;
+  min-width:18px; height:18px; padding:0 4px; box-sizing:border-box;
+  background:#00ff88; color:#001a0d;
+  border-radius:9px;
+  font:bold 11px 'Courier New',monospace;
+  display:none; align-items:center; justify-content:center;
+  box-shadow:0 0 6px rgba(0,255,136,0.6);
+  pointer-events:none;
+}
+#aimBtn.multi #aimBadge { display:flex; }
 
 /* ── ZOOM PERCENTAGE LABEL ── */
 #zoomPct {
@@ -1198,11 +1210,6 @@ canvas.lb-skin:active { opacity:0.6; }
 </style>
 </head>
 <body>
-<script>
-  if (location.hash !== '#golf2026') {
-    document.documentElement.innerHTML = '<h2 style="font-family:sans-serif;padding:2rem">Access denied</h2>';
-  }
-</script>
 
 <!-- Firebase SDK -->
 <!-- ██ INTERNAL TEST BUILD — NOT FOR PRODUCTION ██
@@ -2129,7 +2136,7 @@ canvas.lb-skin:active { opacity:0.6; }
 <div id="zoomPct">100%</div>
 
 <!-- MUTE BUTTON -->
-<div id="aimBtn" title="Aim boost (one use)" onclick="activateAimBoost()">⊕</div>
+<div id="aimBtn" title="Aim boost" onclick="activateAimBoost()">⊕<span id="aimBadge">1</span></div>
 <div id="restartBtn" onclick="restartLevel('hud_button')" title="Restart level">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <polyline points="23 4 23 10 17 10"></polyline>
@@ -5614,6 +5621,61 @@ const LEVELS = [
   teleports:[{a:{x:2332,y:1316},b:{x:2200,y:1741}},{a:{x:3800,y:1201},b:{x:4305,y:1331}}],
   jump:true,
   start:[49,1429], hole:[2140,641] },
+  { name:"LIFT YOURSELF UP", par:4, W:4500, H:1845,
+    segments:[
+      [[0,1840],[4500,1840]],
+      [[220,902],[220,942],[340,942],[340,902]],
+      [[1120,902],[1360,762],[1380,822],[1700,760],[1700,760]],
+      [[1700,760],[1940,902]],
+      [[1940,900],[1900,480],[1920,500]],
+      [[1920,500],[2320,600],[2400,480],[2240,900]],
+      [[2600,0],[2240,1000]],
+      [[2240,1000],[2223,1032],[2198,1060],[2167,1082],[2132,1096],[2096,1100],[2057,1100],[2021,1094],[1983,1079],[1951,1057],[1925,1031],[1892,997]],
+      [[1640,840],[1400,860]],
+      [[1380,820],[1260,880],[1180,940],[1100,1020]],
+      [[1892,997],[1900,1140],[1640,1140],[1640,840]],
+      [[1400,860],[1374,868],[1351,879],[1329,890],[1306,902],[1284,916],[1263,930],[1244,944],[1218,963],[1193,983],[1170,1003],[1156,1019]],
+      [[1156,1019],[1135,1046],[1108,1087],[1084,1129],[1064,1178],[1051,1220],[1041,1269],[1036,1320],[1036,1346]],
+      [[1100,1020],[1079,1048],[1058,1079],[1040,1108],[1022,1147],[1006,1194],[995,1239],[991,1285],[990,1319]],
+      [[990,1319],[1000,1400]],
+      [[1036,1346],[1040,1400],[1060,1560]],
+      [[1000,1400],[1020,1560],[1040,1800],[1220,1820],[1220,1680],[1360,1680],[1360,1540],[1500,1540],[1660,1380]],
+      [[2000,1380],[2160,1300],[2140,1240],[2300,1160]],
+      [[2280,1120],[2120,1200],[1951,1057]],
+      [[2280,1120],[2600,0]],
+      [[2620,1160],[2787,600]],
+      [[2787,600],[3000,600],[3000,660],[4160,660],[4240,600],[4400,740]],
+      [[2524,1160],[2620,1160]],
+      [[2520,1160],[2520,1200],[2620,1200],[2620,1160]],
+      [[4280,600],[4440,740],[4440,740],[4320,1000]],
+      [[4400,740],[4280,1000]],
+      [[4280,600],[4460,420],[4440,-20]],
+      [[4320,1000],[4280,1060]],
+      [[4280,1060],[4220,1080]],
+      [[3580,1080],[3520,720],[3540,960],[3460,960],[3400,940],[3360,960],[3340,980],[3320,1020],[3300,1080],[3280,1140]],
+      [[3280,1140],[3220,1220],[3140,1260],[3040,1280],[2960,1280],[2900,1260],[2840,1200],[2820,1160]],
+      [[2820,1160],[2820,900]],
+      [[2740,900],[2660,1200],[2620,1200]],
+      [[1960,1520],[2200,1520]],
+      [[2740,900],[2760,900],[2760,940],[2800,940],[2800,900],[2820,900]],
+      [[2200,1520],[2450,1270]],
+      [[2520,1200],[2480,1240],[2640,1240]],
+      [[2450,1270],[2610,1270]],
+      [[2610,1270],[2640,1400],[2740,1420]],
+      [[2640,1240],[2647,1269]],
+      [[2740,1420],[2760,1160],[2840,1520]],
+      [[2840,1520],[3280,1520],[3280,1280],[3320,1280]],
+      [[3320,1220],[3320,1520],[3380,1520],[3580,1080]]
+    ],
+    elec:[[1040,1800,1220,1820],[2524,1160,2620,1160],[2640,1400,2740,1420]],
+    sticky:[[0,982,200,902],[1660,1380,1700,1520],[1700,1520,1960,1520],[1960,1520,2000,1380],[2300,1160,2520,1160],[2900,600,3000,600],[4220,1080,4100,1080],[3831,1080,4000,1080],[3720,1080,3580,1080],[3500,1258,3461,1342]],
+    pits:[[180,922,180,962],[180,962,1120,962],[1120,902,1120,962],[4090,1080,4091,900],[4091,900,4009,900],[4009,900,4009,1080],[4009,1080,4090,1080],[3740,1080,3742,900],[3742,900,3821,900],[3821,900,3821,1080],[3821,1080,3740,1080]],
+    water:[[[4240,600],[4160,660],[3000,660],[3000,600]]],
+    crosshairs:[{x:862,y:772},{x:2320,y:1200}],
+    teleports:[{a:{x:2780,y:920},b:{x:2065,y:1482}}],
+    jump:true,
+    motions:[{type:"linear",segs:[1],ax:280,ay:920,bx:1040,by:920,period:6,phase:0},{type:"linear",segs:[22,'elec:1'],ax:2570,ay:1160,bx:2741,by:580,period:6,phase:0},{type:"linear",segs:['pit:3','pit:4','pit:5','pit:6'],ax:4050,ay:990,bx:4048,by:1171,period:5,phase:0},{type:"linear",segs:['pit:10','pit:7','pit:8','pit:9'],ax:3850,ay:990,bx:3849,by:1170,period:3,phase:0}],
+    start:[100,920], hole:[3300,1280] },
 ];
 
 // ═══════════════════════ AUDIO ═══════════════════════════
@@ -5914,7 +5976,7 @@ let lvIdx = 0, strokes = 0;
 let ball  = null;
 let trail = [], ptcls = [];
 let drag  = false, ds = null, dc = null;
-let aimBoostHeld = false, aimBoostUsed = false;
+let aimBoostCount = 0;
 let chPickedUp = new Set();
 let aimFlyAnim = null; // {sx,sy,tx,ty,t,dur} flying icon animation
 let win   = false, winTimer = 0;
@@ -6184,9 +6246,9 @@ function startLevel() {
   jumpUsed = false; onGround = false; airFrames = 0; resetJumpBtn();
   skipCount = 0; waterSunk = false; bubbleT = 0;
   paraReset(); paraUsed.clear();
-  aimBoostHeld = false; aimBoostUsed = false; chPickedUp = new Set(); aimFlyAnim = null;
+  aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
-  if (_ab) { _ab.classList.remove('on','active','used','flash'); }
+  if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
   teleCooldown = 0;
   // Motions: reset time & rebuild segment→motion map for the new level
   _motionTime = 0;
@@ -8229,10 +8291,9 @@ function checkCrosshairPickups() {
     const pt = lv.crosshairs[i];
     if (Math.hypot(ball.x - pt.x, ball.y - pt.y) < r) {
       chPickedUp.add(i);
-      if (!aimBoostHeld && !aimBoostUsed) {
-        spawnAimPickupFX(pt.x, pt.y);
-        startAimFlyAnim(pt.x, pt.y);
-      }
+      // Every pickup counts — fly anim + particles play again, badge updates on arrival.
+      spawnAimPickupFX(pt.x, pt.y);
+      startAimFlyAnim(pt.x, pt.y);
     }
   }
 }
@@ -8270,19 +8331,33 @@ function tickAimFlyAnim() {
   aimFlyAnim.t++;
   if (aimFlyAnim.t >= aimFlyAnim.dur) {
     aimFlyAnim = null;
-    aimBoostHeld = true;
+    aimBoostCount++;
     const ab = document.getElementById('aimBtn');
     if (ab) {
+      ab.classList.remove('used');
       ab.classList.add('on');
       void ab.offsetWidth; // reflow
       ab.classList.add('flash');
       setTimeout(() => ab.classList.remove('flash'), 1200);
     }
+    updateAimBadge();
+  }
+}
+
+function updateAimBadge() {
+  const ab = document.getElementById('aimBtn');
+  if (!ab) return;
+  const bd = document.getElementById('aimBadge');
+  if (aimBoostCount > 1) {
+    ab.classList.add('multi');
+    if (bd) bd.textContent = String(aimBoostCount);
+  } else {
+    ab.classList.remove('multi');
   }
 }
 
 function activateAimBoost() {
-  if (!aimBoostHeld || aimBoostUsed || isMoving() || win || drag) return;
+  if (aimBoostCount <= 0 || isMoving() || win || drag) return;
   const ab = document.getElementById('aimBtn');
   if (!ab) return;
   if (ab.classList.contains('active')) {
@@ -8296,9 +8371,11 @@ function consumeAimBoostIfActive() {
   const ab = document.getElementById('aimBtn');
   if (!ab || !ab.classList.contains('active')) return;
   ab.classList.remove('active');
-  ab.classList.add('used');
-  aimBoostUsed = true;
-  aimBoostHeld = false;
+  aimBoostCount = Math.max(0, aimBoostCount - 1);
+  if (aimBoostCount <= 0) {
+    ab.classList.add('used');
+  }
+  updateAimBadge();
 }
 
 function isAimActive() {
@@ -9166,9 +9243,9 @@ function silentAutoReset(kind) {
   bombExplosion = null;
   jumpUsed = false; airFrames = 0; resetJumpBtn();
   paraReset(); paraUsed.clear();
-  aimBoostHeld = false; aimBoostUsed = false; chPickedUp = new Set(); aimFlyAnim = null;
+  aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
-  if (_ab) { _ab.classList.remove('on','active','used','flash'); }
+  if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
   skipCount = 0; waterSunk = false; bubbleT = 0;
   stopFrames = 0;
   trail = [];
@@ -9204,9 +9281,9 @@ function failRetry() {
   bombExplosion = null;
   jumpUsed = false; airFrames = 0; resetJumpBtn();
   paraReset(); paraUsed.clear();
-  aimBoostHeld = false; aimBoostUsed = false; chPickedUp = new Set(); aimFlyAnim = null;
+  aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
-  if (_ab) { _ab.classList.remove('on','active','used','flash'); }
+  if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
   skipCount = 0; waterSunk = false; bubbleT = 0;
   stopFrames = 0;
   trail = [];
