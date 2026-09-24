@@ -177,6 +177,88 @@ html, body { background:#0a0a0f; width:100%; height:100%; overflow:hidden; touch
 }
 #aimBtn.multi #aimBadge { display:flex; }
 
+/* ── POWER-UP BANNER ── */
+#powerupBanner {
+  position:fixed; inset:0;
+  display:none;
+  align-items:center; justify-content:center;
+  pointer-events:none; z-index:9999;
+  background:radial-gradient(ellipse at center, rgba(0,40,22,0.75) 0%, rgba(0,10,5,0.85) 60%, rgba(0,0,0,0.9) 100%);
+}
+#powerupBanner.on { display:flex; animation:pbFade 2s ease-out forwards; }
+#powerupBanner .pbInner {
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  padding:40px 60px;
+  border-top:2px solid rgba(0,255,136,0.7);
+  border-bottom:2px solid rgba(0,255,136,0.7);
+  box-shadow:0 0 80px rgba(0,255,136,0.5), inset 0 0 60px rgba(0,255,136,0.15);
+  background:linear-gradient(90deg, rgba(0,20,10,0.3) 0%, rgba(0,60,32,0.6) 50%, rgba(0,20,10,0.3) 100%);
+  text-align:center;
+}
+#powerupBanner.on .pbInner { animation:pbPop 2s cubic-bezier(.16,.9,.24,1) forwards; }
+#powerupBanner .pbLabel {
+  font:bold 14px 'Courier New',monospace; letter-spacing:8px;
+  color:#00ff88; opacity:0.9; text-shadow:0 0 12px rgba(0,255,136,0.8);
+}
+#powerupBanner .pbName {
+  font:bold 56px 'Courier New',monospace; letter-spacing:10px;
+  color:#ffffff; text-shadow:0 0 28px rgba(0,255,136,1), 0 0 8px #fff;
+}
+#powerupBanner.on .pbName { animation:pbGlow 2s ease-out forwards; }
+#powerupBanner .pbSub {
+  font:14px 'Courier New',monospace; letter-spacing:4px;
+  color:#ccffe0; opacity:0.9;
+}
+@keyframes pbFade {
+  0%   { opacity:0; }
+  10%  { opacity:1; }
+  80%  { opacity:1; }
+  100% { opacity:0; }
+}
+@keyframes pbPop {
+  0%   { transform:scale(0.6); opacity:0; }
+  15%  { transform:scale(1.05); opacity:1; }
+  25%  { transform:scale(1);    opacity:1; }
+  80%  { transform:scale(1);    opacity:1; }
+  100% { transform:scale(1.02); opacity:0; }
+}
+@keyframes pbGlow {
+  0%   { letter-spacing:40px; filter:blur(8px); opacity:0; }
+  25%  { letter-spacing:10px; filter:blur(0);   opacity:1; }
+  80%  { letter-spacing:10px; filter:blur(0);   opacity:1; }
+  100% { letter-spacing:12px; filter:blur(0);   opacity:0; }
+}
+@media (max-width:600px) {
+  #powerupBanner .pbInner { padding:28px 24px; }
+  #powerupBanner .pbName { font-size:34px; letter-spacing:6px; }
+  #powerupBanner .pbLabel { font-size:11px; letter-spacing:5px; }
+  #powerupBanner .pbSub { font-size:11px; letter-spacing:2px; }
+  @keyframes pbGlow {
+    0%   { letter-spacing:24px; filter:blur(6px); opacity:0; }
+    25%  { letter-spacing:6px;  filter:blur(0);   opacity:1; }
+    80%  { letter-spacing:6px;  filter:blur(0);   opacity:1; }
+    100% { letter-spacing:8px;  filter:blur(0);   opacity:0; }
+  }
+}
+
+/* ── AIM ARROW (points to aimBtn) ── */
+#aimArrow {
+  position:fixed; display:none; pointer-events:none; z-index:9998;
+  filter:drop-shadow(0 0 10px rgba(0,255,136,0.9));
+  transform-origin:50% 20%;
+}
+#aimArrow.on { display:block; animation:aaPulse 0.7s ease-in-out infinite, aaFade 3.5s ease-out forwards; }
+@keyframes aaPulse {
+  0%,100% { transform:translateY(0) scale(1);    }
+  50%     { transform:translateY(-10px) scale(1.18); }
+}
+@keyframes aaFade {
+  0%   { opacity:0; }
+  10%  { opacity:1; }
+  85%  { opacity:1; }
+  100% { opacity:0; }
+}
+
 /* ── ZOOM PERCENTAGE LABEL ── */
 #zoomPct {
   position:fixed;
@@ -2137,6 +2219,8 @@ canvas.lb-skin:active { opacity:0.6; }
 
 <!-- MUTE BUTTON -->
 <div id="aimBtn" title="Aim boost" onclick="activateAimBoost()">⊕<span id="aimBadge">1</span></div>
+<div id="powerupBanner"><div class="pbInner"><div class="pbLabel">POWER-UP</div><div class="pbName" id="pbName">AIM BOOST</div><div class="pbSub" id="pbSub">Trajectory preview unlocked</div></div></div>
+<div id="aimArrow"><svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><path d="M20 4 L20 44 M20 4 L10 16 M20 4 L30 16" stroke="#00ff88" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
 <div id="restartBtn" onclick="restartLevel('hud_button')" title="Restart level">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <polyline points="23 4 23 10 17 10"></polyline>
@@ -5676,6 +5760,42 @@ const LEVELS = [
     jump:true,
     motions:[{type:"linear",segs:[1],ax:280,ay:920,bx:1040,by:920,period:6,phase:0},{type:"linear",segs:[22,'elec:1'],ax:2570,ay:1160,bx:2741,by:580,period:6,phase:0},{type:"linear",segs:['pit:3','pit:4','pit:5','pit:6'],ax:4050,ay:990,bx:4048,by:1171,period:5,phase:0},{type:"linear",segs:['pit:10','pit:7','pit:8','pit:9'],ax:3850,ay:990,bx:3849,by:1170,period:3,phase:0}],
     start:[100,920], hole:[3300,1280] },
+  { name:"RIGHT-LEFT", par:4, W:4998, H:3116,
+    segments:[
+      [[0,3096],[3300,3096]],
+      [[0,2256],[60,2256],[60,1876]],
+      [[180,1976],[100,1716],[0,1716],[0,2256]],
+      [[440,2216],[441,2300],[441,2300]],
+      [[781,2300],[780,2256]],
+      [[220,1736],[340,1736],[520,1596]],
+      [[1020,2136],[860,1600],[520,1596]],
+      [[520,1596],[494,1532],[493,1532],[461,1479],[461,1479],[423,1433],[423,1433],[384,1401],[384,1401]],
+      [[299,1361],[0,1360]],
+      [[461,1479],[560,1280]],
+      [[560,880],[560,1120]],
+      [[740,1280],[740,1040],[780,1000],[920,1160]],
+      [[920,1160],[1140,1160]],
+      [[920,1100],[820,980],[820,700]],
+      [[1140,1160],[980,800],[1640,800]],
+      [[1640,800],[1660,860],[2820,860],[2900,800],[2960,860]],
+      [[876,919],[920,1100]],
+      [[2960,860],[3160,860]],
+      [[3220,860],[3320,860],[3320,0]],
+      [[1020,2136],[2040,2137]],
+      [[2040,1800],[2040,2137]],
+      [[2880,1120],[2840,1160],[2560,1160],[2520,1120]],
+      [[2520,1120],[2500,1080],[2500,1060]],
+      [[2880,1120],[2900,1080],[2900,1060]]
+    ],
+    elec:[[780,2256,1020,2136],[820,700,876,919]],
+    sticky:[[441,2300,780,2300],[180,1976,680,1976],[560,1280,740,1280],[1640,800,1400,800],[1280,1320,1280,1360],[1280,1360,1040,1360],[1040,1360,1040,1320],[1040,1320,1280,1320],[1780,1180,1780,1220],[1780,1220,2080,1220],[2080,1180,2080,1220],[2080,1180,1780,1180]],
+    ice:[[60,1876,70,1995],[70,1995,83,2102],[83,2102,91,2147],[91,2147,104,2192],[104,2192,127,2237],[127,2237,157,2272],[157,2272,190,2289],[190,2289,235,2299],[235,2299,280,2299],[280,2299,326,2290],[326,2290,365,2272],[365,2272,403,2248],[403,2248,440,2216],[3160,860,3600,1200],[3220,860,3660,1200],[3660,1200,3692,1230],[3692,1230,3719,1263],[3719,1263,3733,1298],[3733,1298,3733,1334],[3733,1334,3715,1371],[3715,1371,3604,1472],[3604,1472,3086,1870],[3086,1870,2901,1970],[2901,1970,2739,2031],[2739,2031,2631,2060],[2631,2060,2531,2070],[2531,2070,2436,2069],[2436,2069,2347,2052],[2347,2052,2258,2003],[2258,2003,2160,1920],[2160,1920,2040,1800]],
+    water:[[[2900,800],[2820,860],[1660,860],[1640,800]]],
+    crosshairs:[{x:680,y:1320}],
+    teleports:[{a:{x:1868,y:2114},b:{x:538,y:1571}}],
+    jump:true,
+    motions:[{type:"linear",segs:[10],ax:560,ay:390,bx:560,by:549,period:4.5,phase:0},{type:"linear",segs:['sticky:4','sticky:5','sticky:6','sticky:7'],ax:1200,ay:1340,bx:720,by:1440,period:4,phase:0}],
+    start:[10,2245], hole:[2720,1140] },
 ];
 
 // ═══════════════════════ AUDIO ═══════════════════════════
@@ -8341,7 +8461,46 @@ function tickAimFlyAnim() {
       setTimeout(() => ab.classList.remove('flash'), 1200);
     }
     updateAimBadge();
+    showPowerupBanner('AIM BOOST', 'Trajectory preview unlocked');
   }
+}
+
+let _pbTimer = null;
+function showPowerupBanner(name, sub) {
+  const el = document.getElementById('powerupBanner');
+  if (!el) return;
+  const nameEl = document.getElementById('pbName');
+  const subEl  = document.getElementById('pbSub');
+  if (nameEl) nameEl.textContent = name;
+  if (subEl)  subEl.textContent  = sub || '';
+  // Restart animation cleanly
+  el.classList.remove('on');
+  void el.offsetWidth;
+  el.classList.add('on');
+  if (_pbTimer) clearTimeout(_pbTimer);
+  _pbTimer = setTimeout(() => { el.classList.remove('on'); _pbTimer = null; }, 2000);
+  // After banner fades out, pulse arrow at the aim button for a few seconds
+  if (_aaBannerTimer) clearTimeout(_aaBannerTimer);
+  _aaBannerTimer = setTimeout(() => { showAimArrow(); _aaBannerTimer = null; }, 1900);
+}
+
+let _aaTimer = null, _aaBannerTimer = null;
+function showAimArrow() {
+  const btn = document.getElementById('aimBtn');
+  const arr = document.getElementById('aimArrow');
+  if (!btn || !arr) return;
+  if (!btn.classList.contains('on')) return; // button not visible → skip
+  const r = btn.getBoundingClientRect();
+  // Place arrow just below the button, centered horizontally
+  const cx = r.left + r.width / 2;
+  const top = r.bottom + 10;
+  arr.style.left = (cx - 20) + 'px'; // arrow SVG is 40px wide
+  arr.style.top  = top + 'px';
+  arr.classList.remove('on');
+  void arr.offsetWidth;
+  arr.classList.add('on');
+  if (_aaTimer) clearTimeout(_aaTimer);
+  _aaTimer = setTimeout(() => { arr.classList.remove('on'); _aaTimer = null; }, 3500);
 }
 
 function updateAimBadge() {
