@@ -711,6 +711,43 @@ canvas { display:block; }
   padding:10px 26px;
 }
 
+/* ── TARGET GALLERY onboarding (one-time) ── */
+#tgOnb {
+  display:none; position:fixed; inset:0; z-index:45;
+  background:rgba(2,6,4,0.92);
+  align-items:center; justify-content:center;
+  padding:24px; pointer-events:all; cursor:pointer;
+}
+#tgOnb.on { display:flex; }
+#tgOnb .card {
+  max-width:340px; text-align:center;
+  border:1px solid rgba(255,85,119,0.35); border-radius:12px;
+  background:rgba(0,20,12,0.6); padding:24px 22px;
+  box-shadow:0 0 40px rgba(255,85,119,0.12);
+}
+#tgOnb .ico {
+  font-size:44px; line-height:1;
+  filter:drop-shadow(0 0 12px #ff5577);
+  animation:tgPulse 1.2s ease-in-out infinite;
+}
+@keyframes tgPulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.12);} }
+#tgOnb .ttl { margin:14px 0 12px; font:bold 14px monospace; letter-spacing:5px; color:#ff5577; }
+#tgOnb .steps { text-align:left; display:flex; flex-direction:column; gap:9px; }
+#tgOnb .st { display:flex; align-items:center; gap:12px; font:11px/1.5 monospace; letter-spacing:1px; color:#7fd9aa; }
+#tgOnb .st b { color:#00ff88; }
+#tgOnb .st .n {
+  flex:0 0 26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font:bold 12px monospace; color:#ff5577; border:1px solid rgba(255,85,119,0.55);
+}
+#tgOnb .note { margin-top:12px; font:10px/1.6 monospace; letter-spacing:1px; color:#5fb088; }
+#tgOnb .ok {
+  margin-top:16px; display:inline-block;
+  font:bold 11px monospace; letter-spacing:4px; color:#00ff88;
+  border:1px solid rgba(0,255,136,0.4); border-radius:8px;
+  padding:10px 26px;
+}
+
 /* ── LEVEL SELECT (inside pause/main) ── */
 #lvmenu { display:none; }
 #lvmenu.on { display:flex; }
@@ -2240,6 +2277,7 @@ canvas.lb-skin:active { opacity:0.6; }
     <div class="hb"><div class="hl">LEVEL</div><div class="hv" id="hlevel">1</div></div>
     <div class="hb"><div class="hl">STROKES</div><div class="hv" id="hstrokes">0</div></div>
     <div class="hb"><div class="hl">TIME</div><div class="hv" id="htime">0</div></div>
+    <div class="hb" id="tgBox" style="display:none"><div class="hl">TARGETS</div><div class="hv" id="htargets">0/0</div></div>
     <div class="hb" id="jumpBtn"><div class="hl">JUMP</div><div class="hv" id="jumpIcon">⬆</div></div>
   </div>
 </div>
@@ -2309,6 +2347,19 @@ canvas.lb-skin:active { opacity:0.6; }
     <div class="ico">⬆</div>
     <div class="ttl">NEW: JUMP</div>
     <div class="bdy">While the ball is <b>in the air</b>, tap once to give it a little extra boost upward.<br>You get <b>one jump</b> per try.</div>
+    <div class="ok">GOT IT</div>
+  </div>
+</div>
+<div id="tgOnb" onclick="dismissTargetOnboard()">
+  <div class="card">
+    <div class="ico">🎯</div>
+    <div class="ttl">NEW: TARGETS</div>
+    <div class="steps">
+      <div class="st"><div class="n">1</div><div>Hit <b>all the targets</b> with the ball</div></div>
+      <div class="st"><div class="n">2</div><div>The <b>cage</b> around the hole <b>opens</b></div></div>
+      <div class="st"><div class="n">3</div><div>Now <b>sink the ball</b> in the hole</div></div>
+    </div>
+    <div class="note">Until the cage opens, the ball returns to the start after every shot. Every shot counts.</div>
     <div class="ok">GOT IT</div>
   </div>
 </div>
@@ -5800,6 +5851,21 @@ const LEVELS = [
     jump:true,
     motions:[{type:"linear",segs:[10],ax:560,ay:390,bx:560,by:549,period:4.5,phase:0},{type:"linear",segs:['sticky:4','sticky:5','sticky:6','sticky:7'],ax:1200,ay:1340,bx:720,by:1440,period:4,phase:0},{type:"rotate",segs:[24,25,'sticky:11','sticky:9'],cx:2200,cy:1480,omega:0.9,phase:0}],
     start:[10,2245], hole:[2720,1340] },
+  { name:"TARGET", par:4, W:1300, H:800,
+    segments:[
+      [[0,780],[1300,780]],
+      [[600,780],[620,680],[720,700],[760,760],[800,740],[760,680],[620,640],[460,500],[620,500],[620,460],[720,460],[840,600],[1120,720],[1140,680],[880,560],[780,440]],
+      [[462,340],[420,260]],
+      [[462,340],[542,320],[542,280]],
+      [[542,280],[502,320],[482,320],[440,260],[420,260]],
+      [[740,340],[1020,340],[1120,200],[1300,200]],
+      [[780,440],[620,400],[740,340]],
+      [[200,180],[200,220],[280,220],[280,180]]
+    ],
+    elec:[[740,340,620,400],[800,340,900,340]],
+    targets:[{x:600,y:480,r:18},{x:1109,y:691,r:18},{x:767,y:730,r:18},{x:493,y:298,r:18},{x:1007,y:319,r:18},{x:1279,y:178,r:18}],
+    jump:true,
+    start:[100,760], hole:[240,200] },
 ];
 
 // ═══════════════════════ AUDIO ═══════════════════════════
@@ -6395,9 +6461,10 @@ function startLevel() {
   if (jb) jb.style.display = (lv && lv.jump) ? 'flex' : 'none';
   freeLook = false; flAnchor = null;
   if (viewMode) exitViewMode();
+  maybeShowTargetOnboard();
   maybeShowJumpOnboard();
   // Aim hint показуємо після intro (якщо intro не грає — одразу).
-  if (!jumpOnboardOn && !introCam) maybeShowAimHint();
+  if (!jumpOnboardOn && !targetOnboardOn && !introCam) maybeShowAimHint();
   document.getElementById('hlevel').textContent   = lvIdx + 1;
   document.getElementById('hstrokes').textContent = strokes;
   document.getElementById('htitle').textContent   = LEVELS[lvIdx].name;
@@ -6408,6 +6475,158 @@ function startLevel() {
   if (introCam) {
     levelStartTs = Date.now() + introCam.totalMs;
   }
+  tgInit();
+}
+
+// ═══════════════════ TARGET GALLERY ═══════════════════════
+// Рівень стає «тиром», якщо в ньому є хоча б одна мішень у межах W×H (lv.targets).
+// Збий усі мішені → клітка навколо лунки (4 стінки) відкривається → заганяй у лунку.
+// Рахунок як на звичайних рівнях: усі удари → strokes/PAR, час без ліміту.
+// Поки клітка закрита — після кожного удару, коли м'яч зупинився, він повертається на START.
+// Падіння в pit = звичайний fail (UNDO або нова спроба; нова спроба скидає й мішені).
+const CAGE_HW = 30, CAGE_H = 72, CAGE_SINK = 12, TG_REST_FRAMES = 24;
+let tgMode = false, tgIdx = [], tgHit = new Set(), cageOpen = true, tgShot = false, tgRest = 0;
+function tgInBounds(lv, t) { return t.x >= 0 && t.x <= lv.W && t.y >= 0 && t.y <= lv.H; }
+function tgPos(i) {
+  const t = LEVELS[lvIdx].targets[i];
+  const mo = _motionSegMap ? _motionSegMap.get('target:' + i) : null;
+  if (mo) { const p = _motionXform(mo, t.x, t.y); return { x: p[0], y: p[1], r: t.r || 18 }; }
+  return { x: t.x, y: t.y, r: t.r || 18 };
+}
+function tgInit() {
+  const lv = LEVELS[lvIdx];
+  tgIdx = [];
+  (lv.targets || []).forEach((t, i) => { if (tgInBounds(lv, t)) tgIdx.push(i); });
+  tgMode = tgIdx.length > 0;
+  tgResetAttempt();
+  const box = document.getElementById('tgBox');
+  if (box) box.style.display = tgMode ? 'flex' : 'none';
+}
+// Нова спроба рівня: усі мішені знову стоять, клітка закрита
+function tgResetAttempt() {
+  tgHit = new Set(); cageOpen = !tgMode; tgShot = false; tgRest = 0;
+  tgHud();
+}
+function tgHud() {
+  if (!tgMode) return;
+  const el = document.getElementById('htargets');
+  if (el) el.textContent = tgHit.size + '/' + tgIdx.length;
+}
+function cageSegs() {
+  const [hx, hy] = LEVELS[lvIdx].hole;
+  const l = hx - CAGE_HW, r = hx + CAGE_HW, t = hy - CAGE_H, b = hy + CAGE_SINK;
+  return [[l,b,l,t], [l,t,r,t], [r,t,r,b], [r,b,l,b]];
+}
+function checkCage() {
+  if (cageOpen) return;
+  for (const sg of cageSegs()) {
+    const c = segCollide(sg[0], sg[1], sg[2], sg[3]);
+    if (c) _resolveWallHit(c, null);
+  }
+}
+function checkTargets() {
+  if (!tgMode || cageOpen) return;
+  for (const i of tgIdx) {
+    if (tgHit.has(i)) continue;
+    const p = tgPos(i);
+    if (Math.hypot(ball.x - p.x, ball.y - p.y) < p.r + BALL_R) {
+      tgHit.add(i);
+      spawnTargetFX(p.x, p.y);
+      try { SFX.skip(tgHit.size); } catch(e) {}
+      tgHud();
+      if (tgHit.size >= tgIdx.length) openCage();
+    }
+  }
+}
+function spawnTargetFX(x, y) {
+  for (let k = 0; k < 28; k++) {
+    const a = Math.random() * Math.PI * 2, sp = 1.5 + Math.random() * 5;
+    ptcls.push({ x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp - 1,
+      life: 1, decay: 0.025 + Math.random()*0.03, size: 2 + Math.random()*3,
+      color: ['#ff5577','#ffffff','#ff99aa','#ffcc00'][Math.floor(Math.random()*4)] });
+  }
+}
+function openCage() {
+  cageOpen = true; tgShot = false; tgRest = 0;
+  for (const sg of cageSegs()) {
+    for (let k = 0; k < 14; k++) {
+      const f = Math.random();
+      const x = sg[0] + (sg[2]-sg[0])*f, y = sg[1] + (sg[3]-sg[1])*f;
+      const a = Math.random() * Math.PI * 2, sp = 1 + Math.random() * 4;
+      ptcls.push({ x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp - 2,
+        life: 1, decay: 0.015 + Math.random()*0.02, size: 2 + Math.random()*2.5,
+        color: ['#aabbcc','#dddddd','#ff5577','#ffcc00'][Math.floor(Math.random()*4)] });
+    }
+  }
+  try { SFX.zap(); } catch(e) {}
+  showMsg('CAGE OPEN!');
+  setTimeout(() => { if (!win) hideMsg(); }, 1300);
+  _safeLog('target_gallery_cleared', {
+    level_index: lvIdx, strokes: strokes,
+    time_on_level_sec: Math.round((Date.now() - levelStartTs) / 1000),
+  });
+}
+// Повернення м'яча на START після удару (удари/час/збиті мішені зберігаються)
+function tgRespawn() {
+  const lv = LEVELS[lvIdx];
+  ball.x = lv.start[0]; ball.y = lv.start[1]; ball.vx = 0; ball.vy = 0;
+  trail = []; stuck = null; paraReset(); paraUsed.clear(); teleCooldown = 0;
+  jumpUsed = false; airFrames = 0; resetJumpBtn();
+  skipCount = 0; waterSunk = false;
+  _basketballCandidate = false;
+  stopFrames = 0;
+  tgShot = false; tgRest = 0;
+  for (let k = 0; k < 14; k++) {
+    const a = (k / 14) * Math.PI * 2;
+    ptcls.push({ x: ball.x + Math.cos(a)*14, y: ball.y + Math.sin(a)*14,
+      vx: Math.cos(a)*0.8, vy: Math.sin(a)*0.8, life: 0.8, decay: 0.04, size: 2, color: '#00ff88' });
+  }
+}
+// Щокроку фізики: респаун, коли м'яч після удару стабільно зупинився
+function tgAfterTick() {
+  if (!tgMode || cageOpen || !tgShot || !ball || win) return;
+  if (pitSuck || bombExplosion || failScreenActive || undoConfirmOpen || undoAdShowing) return;
+  if (ball.y > LEVELS[lvIdx].H + 400) { tgRespawn(); return; }
+  if (stuck || !isMoving()) { tgRest++; if (tgRest >= TG_REST_FRAMES) tgRespawn(); }
+  else tgRest = 0;
+}
+function rTargets() {
+  if (!tgMode) return;
+  const t = performance.now() * 0.004;
+  for (const i of tgIdx) {
+    if (tgHit.has(i)) continue;
+    const p = tgPos(i), r = p.r;
+    const pulse = 0.85 + 0.15 * Math.sin(t + i);
+    ctx.save();
+    ctx.shadowColor = '#ff5577'; ctx.shadowBlur = 10 * pulse;
+    ctx.fillStyle = 'rgba(255,85,119,0.15)';
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = '#ff5577';
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(p.x, p.y, r*0.6, 0, Math.PI*2); ctx.stroke();
+    ctx.fillStyle = '#ff5577';
+    ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(2, r*0.22), 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+}
+function rCage() {
+  if (cageOpen) return;
+  const [hx, hy] = LEVELS[lvIdx].hole;
+  const l = hx - CAGE_HW, r = hx + CAGE_HW, top = hy - CAGE_H, b = hy + CAGE_SINK;
+  ctx.save();
+  ctx.fillStyle = 'rgba(255,85,119,0.05)'; ctx.fillRect(l, top, r - l, b - top);
+  ctx.strokeStyle = 'rgba(170,187,204,0.8)'; ctx.lineWidth = 1.5;
+  for (let k = 1; k < 6; k++) { const x = l + (r - l) * k / 6; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, b); ctx.stroke(); }
+  ctx.strokeStyle = '#aabbcc'; ctx.lineWidth = 4; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.moveTo(l, b); ctx.lineTo(l, top); ctx.lineTo(r, top); ctx.lineTo(r, b); ctx.closePath(); ctx.stroke();
+  ctx.fillStyle = '#ffcc00'; ctx.fillRect(hx - 6, top + 10, 12, 9);
+  ctx.strokeStyle = '#ffcc00'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(hx, top + 10, 4, Math.PI, 0); ctx.stroke();
+  ctx.fillStyle = '#ff5577'; ctx.font = 'bold 11px monospace'; ctx.textAlign = 'center';
+  ctx.fillText((tgIdx.length - tgHit.size) + ' LEFT', hx, top - 8);
+  ctx.restore();
 }
 
 function clampCam(v, lo, hi) {
@@ -6431,6 +6650,7 @@ function lvBounds(lv) {
   for (const e of (lv.ice || [])) { add(e[0], e[1]); add(e[2], e[3]); }
   for (const p of (lv.pits || [])) { add(p[0], p[1]); add(p[2], p[3]); }
   for (const p of (lv.parachutes || [])) add(p.x, p.y);
+  for (const p of (lv.targets || [])) add(p.x, p.y);
   add(lv.start[0], lv.start[1]);
   add(lv.hole[0], lv.hole[1]);
   add(0, 0); add(lv.W, lv.H); // номінальний світ теж входить (бокові стінки, підлога)
@@ -6490,10 +6710,32 @@ function hideAimHint() {
   clearTimeout(_aimHintTO);
 }
 
+// ═══════════════════ TARGET GALLERY ONBOARDING (one-time) ═══
+// Перший вхід на рівень з мішенями. Якщо на рівні ще й jump — банер стрибка йде ПІСЛЯ цього.
+let targetOnboardOn = false;
+function maybeShowTargetOnboard() {
+  if (!gameStarted) return;
+  const lv = LEVELS[lvIdx];
+  if (!lv || !(lv.targets || []).some(t => t.x >= 0 && t.x <= lv.W && t.y >= 0 && t.y <= lv.H)) return;
+  try { if (localStorage.getItem('mg_hint_targets')) return; } catch {}
+  targetOnboardOn = true;                        // морозить фізику в loop()
+  document.getElementById('tgOnb').classList.add('on');
+  try { localStorage.setItem('mg_hint_targets', '1'); } catch {}  // показуємо один раз на гравця
+  _safeLog('onboarding_shown', { kind: 'targets', level_index: lvIdx });
+}
+function dismissTargetOnboard() {
+  if (!targetOnboardOn) return;
+  targetOnboardOn = false;
+  document.getElementById('tgOnb').classList.remove('on');
+  maybeShowJumpOnboard();                        // черговий онбординг (якщо рівень зі стрибком)
+  if (!jumpOnboardOn && !introCam) maybeShowAimHint();
+}
+
 // ═══════════════════ JUMP ONBOARDING (one-time) ═══════════
 let jumpOnboardOn = false;
 function maybeShowJumpOnboard() {
   if (!gameStarted) return;
+  if (targetOnboardOn) return;                   // покажемо після банера мішеней
   const lv = LEVELS[lvIdx];
   if (!lv || !lv.jump) return;                 // лише на рівнях зі стрибком
   try { if (localStorage.getItem('mg_hint_jump')) return; } catch {}
@@ -6982,6 +7224,8 @@ function paraTick() {
   checkTerrain();
   checkExtraSegs();
   checkIce();
+  checkCage();
+  checkTargets();
   if (onGround) { ball.vy = 0; paraReset(); }
 }
 function paraSteerDown(e) {
@@ -7067,7 +7311,7 @@ function tick() {
     if (trail.length > 70) trail.shift();
     const [hxP, hyP] = lv.hole;
     const ddxP = ball.x - hxP, ddyP = ball.y - hyP;
-    if (Math.sqrt(ddxP*ddxP + ddyP*ddyP) < HOLE_R * 0.8) {
+    if (cageOpen && Math.sqrt(ddxP*ddxP + ddyP*ddyP) < HOLE_R * 0.8) {
       win = true; winTimer = 150;
       spawnConfetti(hxP, hyP);
       SFX.goal();
@@ -7118,6 +7362,7 @@ function tick() {
     if (ball.x > lv.W - BALL_R) { _bbContact(); ball.x = lv.W - BALL_R; ball.vx = -Math.abs(ball.vx) * BOUNDARY_BOUNCE; }
 
     checkCrosshairPickups();
+    checkTargets();
 
     // Телепорт спрацьовує ПЕРШИМ у substep, щоб мати пріоритет над terrain/water/парашутом
     if (checkTeleports()) break;
@@ -7143,6 +7388,7 @@ function tick() {
       checkIce();
       checkElecWalls();
     }
+    checkCage();
     if (checkPits()) break;
   }
 
@@ -7155,7 +7401,7 @@ function tick() {
   // Лунка
   const [hx, hy] = LEVELS[lvIdx].hole;
   const ddx = ball.x - hx, ddy = ball.y - hy;
-  if (Math.sqrt(ddx*ddx + ddy*ddy) < HOLE_R * 0.8) {
+  if (cageOpen && Math.sqrt(ddx*ddx + ddy*ddy) < HOLE_R * 0.8) {
     // basketball: перевіряємо ПЕРЕД усіма side-effects (bomb explosion теж goal)
     if (_basketballCandidate && earnBadge('basketball')) queueBadgeEarn('basketball');
     _basketballCandidate = false;
@@ -7266,7 +7512,7 @@ function finishIntroCam() {
   introCam = null;
   // Таймер рівня стартує саме тут (ми зсували levelStartTs у майбутнє).
   levelStartTs = Date.now();
-  if (!jumpOnboardOn && !paraOnboardOn) maybeShowAimHint();
+  if (!jumpOnboardOn && !paraOnboardOn && !targetOnboardOn) maybeShowAimHint();
 }
 
 function moveCamera() {
@@ -7619,6 +7865,8 @@ function render() {
   rTeleports();
   rCrosshairPickups();
   rHole();
+  rCage();
+  rTargets();
   rTrail();
   if (!win || pitSuck || bombExplosion) rBall();
   rParticles();
@@ -9034,6 +9282,7 @@ function onDown(e) {
   e.preventDefault();
   if (viewMode) { viewOnDown(e); return; }
   if (jumpOnboardOn) return;   // онбординг джампа — ігнорувати ввід
+  if (targetOnboardOn) return; // онбординг мішеней — ігнорувати ввід
   if (paraOnboardOn) return;   // онбординг парашута — ігнорувати ввід
   // ── PINCH-ZOOM у ігровому режимі: два пальці → починаємо зум, скасовуємо прицілювання ──
   if (e.touches && e.touches.length >= 2) {
@@ -9158,6 +9407,7 @@ function onUp(e) {
   hideAimHint();
   hidePeek();
   document.getElementById('hstrokes').textContent = strokes;
+  if (tgMode && !cageOpen) { tgShot = true; tgRest = 0; }
   if (lastFailTs && (Date.now() - lastFailTs) < 8000) {
     _safeLog('retry_after_fail', {
       level_index: lvIdx, fails_this_attempt: levelFails,
@@ -9303,6 +9553,8 @@ function saveShotSnapshot() {
     airFrames: airFrames,
     stuck: stuck ? { seg:stuck.seg.slice(), nx:stuck.nx, ny:stuck.ny } : null,
     motionTime: _motionTime,        // положення рухомих секцій відкочується разом з ударом
+    tgHit: new Set(tgHit),          // TARGET GALLERY: збиті мішені + стан клітки до удару
+    cageOpen: cageOpen,
   };
 }
 
@@ -9333,6 +9585,8 @@ function applyUndo() {
   }
   onGround = false;
   stopFrames = 0;
+  // TARGET GALLERY: відкат збитих мішеней і клітки
+  if (s.tgHit) { tgHit = new Set(s.tgHit); cageOpen = s.cageOpen; tgShot = false; tgRest = 0; tgHud(); }
   // Час: відкатуємо секундомір так, щоб wall-time дорівнював snapshot.timeMs
   levelStartTs = Date.now() - s.timeMs;
   levelTimeMs  = s.timeMs;
@@ -9421,6 +9675,7 @@ function silentAutoReset(kind) {
   levelTimeSec = 0;
   _hudTimeLast = '';
   document.getElementById('hstrokes').textContent = strokes;
+  tgResetAttempt();
 }
 
 function hideFailScreen() {
@@ -9461,6 +9716,7 @@ function failRetry() {
   levelTimeSec = 0;
   _hudTimeLast = '';
   document.getElementById('hstrokes').textContent = strokes;
+  tgResetAttempt();
 }
 window.failRetry = failRetry;
 
@@ -12776,6 +13032,7 @@ function physicsStep() {
   _motionTime += FIXED_DT / 1000;
   _computeMotionState(_motionTime);
   tick();
+  tgAfterTick();
   tickParticles();
   moveCamera();
   updatePostTickState();
@@ -12868,7 +13125,7 @@ function loop(now) {
 
   updateHudTimer();   // оновлюємо таймер кожен кадр (DOM-write лише при зміні тексту)
 
-  if (!gameStarted || paused || jumpOnboardOn || paraOnboardOn) {
+  if (!gameStarted || paused || jumpOnboardOn || paraOnboardOn || targetOnboardOn) {
     _physAccumulator = 0;              // freeze physics clock while paused
     render();
     return;
@@ -13122,6 +13379,7 @@ window.lvrRestart = lvrRestart;
 // ══════════════════ ANDROID BACK BUTTON ═══════════════════
 window.handleAndroidBack = function() {
   // 0. Онбординг стрибка відкритий — закрити
+  if (targetOnboardOn) { dismissTargetOnboard(); return; }
   if (jumpOnboardOn) { dismissJumpOnboard(); return; }
   // 0.1 Badge info popup — закрити (він поверх усього)
   var biEl = document.getElementById('badgeInfoPopup');
