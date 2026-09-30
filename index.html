@@ -7670,7 +7670,7 @@ function spawnGhostPuff(x, y) {
     const a = Math.random()*Math.PI*2, s = 0.5 + Math.random()*1.2;
     ptcls.push({x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s, life:1,
       decay: 0.07+Math.random()*0.06, size: 1+Math.random()*2,
-      color: ['#ff88ff','#ffaaff','#cc66ff','#ffffff'][Math.floor(Math.random()*4)]});
+      color: ['#ff8c00','#ffb347','#ff6a00','#ffffff'][Math.floor(Math.random()*4)]});
   }
 }
 
@@ -8339,7 +8339,7 @@ function rStickyWalls() {
     // Перпендикулярні "клейкі" рисочки вздовж сегмента
     const nx = -dy/len, ny = dx/len;
     const step = 10, dashLen = 3.5;
-    ctx.strokeStyle = 'rgba(255,200,255,' + (0.75 * pulse) + ')';
+    ctx.strokeStyle = 'rgba(255,200,120,' + (0.75 * pulse) + ')';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     for (let d = step * 0.5; d < len; d += step) {
@@ -8440,15 +8440,15 @@ function rGhostWalls() {
     const arrowDirX = nx, arrowDirY = ny;
     ctx.save();
     // Glow + solid line
-    ctx.shadowColor = '#ff88ff'; ctx.shadowBlur = 10;
-    ctx.strokeStyle = '#ff88ff'; ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#ff8c00'; ctx.shadowBlur = 10;
+    ctx.strokeStyle = '#ff8c00'; ctx.lineWidth = 2.5;
     ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
     ctx.shadowBlur = 0;
     // Soft halo
-    ctx.strokeStyle = 'rgba(255,136,255,0.18)'; ctx.lineWidth = 6;
+    ctx.strokeStyle = 'rgba(255,140,0,0.18)'; ctx.lineWidth = 6;
     ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
     // Dashed overlay
-    ctx.strokeStyle = 'rgba(255,200,255,0.35)'; ctx.lineWidth = 1.2;
+    ctx.strokeStyle = 'rgba(255,200,120,0.35)'; ctx.lineWidth = 1.2;
     ctx.setLineDash([6, 5]);
     ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
     ctx.setLineDash([]);
@@ -8465,7 +8465,7 @@ function rGhostWalls() {
       const t1Y = cy2 - ty*chevSize*0.65 - arrowDirY*chevSize*0.2;
       const t2X = cx2 + tx*chevSize*0.65 - arrowDirX*chevSize*0.2;
       const t2Y = cy2 + ty*chevSize*0.65 - arrowDirY*chevSize*0.2;
-      ctx.strokeStyle = 'rgba(255,200,255,' + alpha + ')';
+      ctx.strokeStyle = 'rgba(255,200,120,' + alpha + ')';
       ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.moveTo(t1X,t1Y); ctx.lineTo(tipX,tipY); ctx.lineTo(t2X,t2Y); ctx.stroke();
     }
