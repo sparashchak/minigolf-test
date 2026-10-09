@@ -10320,6 +10320,7 @@ function applyUndo() {
   else          resetJumpBtn();
   paraUsed.clear(); s.paraUsed.forEach(v => paraUsed.add(v));
   paraReset();
+  apReset(); apUsed.clear(); apHintFrames = 0; apGraceFrames = 0;
   waterSunk = s.waterSunk;
   pitSuck = null;
   bombExplosion = null;
@@ -10408,6 +10409,7 @@ function silentAutoReset(kind) {
   bombExplosion = null;
   jumpUsed = false; airFrames = 0; resetJumpBtn();
   paraReset(); paraUsed.clear();
+  apReset(); apUsed.clear(); apHintFrames = 0; apGraceFrames = 0;
   aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
   if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
@@ -10447,6 +10449,7 @@ function failRetry() {
   bombExplosion = null;
   jumpUsed = false; airFrames = 0; resetJumpBtn();
   paraReset(); paraUsed.clear();
+  apReset(); apUsed.clear(); apHintFrames = 0; apGraceFrames = 0;
   aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
   if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
