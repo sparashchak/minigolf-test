@@ -6213,9 +6213,9 @@ const LEVELS = [
     [[420,540],[420,500]],
     [[420,540],[400,540],[400,540],[378,542],[378,542],[357,549],[357,549],[340,562],[340,562],[327,581],[327,581],[315,609],[315,609],[311,631],[311,631],[310,660]],
     [[422,579],[400,580],[400,660],[880,660],[880,640]],
-    [[310,660],[310,692],[310,692],[313,722],[313,722],[323,758],[323,758],[338,786],[338,786],[363,806],[363,806],[395,819],[395,819],[429,823],[429,823],[474,824],[474,824],[517,824],[517,824],[901,825]],
+    [[310,660],[310,692],[310,692],[313,722],[313,722],[323,758],[323,758],[338,786],[338,786],[363,806],[363,806],[395,819],[395,819],[429,823],[429,823],[474,824],[474,824],[517,824],[517,824],[900,825]],
     [[1140,620],[1300,520]],
-    [[1140,720],[1140,720],[1137,741],[1137,741],[1132,760],[1132,760],[1124,777],[1124,777],[1113,793],[1113,793],[1098,806],[1098,806],[1080,816],[1080,816],[1059,823],[1059,823],[1034,826],[1034,826],[901,825]],
+    [[1140,720],[1140,720],[1137,741],[1137,741],[1132,760],[1132,760],[1124,777],[1124,777],[1113,793],[1113,793],[1098,806],[1098,806],[1080,816],[1080,816],[1059,823],[1059,823],[1034,826],[1034,826],[900,825]],
     [[1140,620],[1140,640],[1300,540]],
     [[1140,720],[1300,620]],
     [[1300,520],[1671,700]],
@@ -6253,7 +6253,7 @@ const LEVELS = [
   elec:[[1640,1500,2320,1080]],
   sticky:[[880,640,660,640],[1700,820,1700,840],[1820,840,1820,820],[1820,840,1700,840],[1700,820,1820,820],[2180,800,2360,800],[2500,1025,2420,1025],[1400,1026,1200,1000],[300,1000,261,955],[0,1500,1240,1500]],
   pits:[[660,640,420,640],[1680,860,2400,860]],
-  ghost:[[200,453,0,453],[901,825,880,870],[740,870,781,870]],
+  ghost:[[200,453,0,453],[900,829,880,870],[740,870,781,870]],
   water:[[[1276,454],[1200,500],[306,500],[293,482],[275,467],[254,459],[231,454]],[[2320,1025],[2320,1080],[1580,1080],[1526,1025]]],
   crosshairs:[{x:1320,y:505}],
   teleports:[{a:{x:716,y:847},b:{x:60,y:1460}},{a:{x:680,y:1160},b:{x:160,y:740}},{a:{x:61,y:1022},b:{x:287,y:949}}],
@@ -6261,6 +6261,51 @@ const LEVELS = [
   jump:true,
   motions:[{type:"linear",segs:[23,'sticky:5'],ax:2280,ay:500,bx:2280,by:100,period:4.9,phase:0}],
   start:[100,640], hole:[100,740] },
+  { name:"MEET THE PLANE", par:4, W:8820, H:1465,
+  segments:[
+    [[0,1460],[8820,1460]],
+    [[0,480],[140,480],[196,485],[196,485],[250,493],[250,493],[296,507],[296,507],[638,733],[638,733],[707,785],[707,785]],
+    [[1054,1000],[1025,997],[998,987]],
+    [[925,870],[927,841],[937,814],[952,789],[973,768],[998,753],[1025,743],[1054,740],[1083,743],[1110,753],[1135,768],[1156,789],[1171,814],[1181,841],[1184,870],[1181,899],[1171,926],[1156,951],[1135,972],[1110,987],[1083,997],[1054,1000]],
+    [[926,941],[926,941],[935,1030],[935,1030],[947,1078],[947,1078],[970,1130],[970,1130],[993,1167],[993,1167],[1019,1195],[1019,1195]],
+    [[998,987],[974,975]],
+    [[906,917],[707,785]],
+    [[906,917],[902,929]],
+    [[1019,1195],[1049,1215],[1049,1215],[1087,1229],[1087,1229],[1132,1234],[1132,1234],[1174,1233],[1174,1233],[1216,1222],[1216,1222],[1246,1199],[1246,1199],[1270,1180]],
+    [[1270,1180],[1270,1220],[1760,1220],[1760,1180],[1840,1280],[2340,1280],[2380,1180]],
+    [[2380,1180],[2380,1220]],
+    [[5520,1220],[6200,1360],[6400,980],[6840,980]],
+    [[6340,360],[6400,760],[6520,780],[6600,660]],
+    [[6840,980],[6900,860]],
+    [[6940,800],[6940,0]],
+    [[6340,360],[6280,360],[6269,320],[6331,320],[6240,0]],
+    [[6200,1360],[6940,1360]],
+    [[6940,800],[6811,800]],
+    [[6500,1180],[6560,1120],[6640,1200]],
+    [[6580,1100],[6660,1180],[6720,1120],[6640,1040],[6580,1100]],
+    [[6500,1180],[6580,1260],[6640,1200]],
+    [[6940,1360],[6966,1307],[6980,1267],[6984,1227],[6978,1189],[6967,1151],[6950,1109],[7034,1044],[7240,1380]],
+    [[6840,980],[6866,996],[6890,1015],[6913,1037],[6931,1063]],
+    [[7089,1043],[7240,1300]],
+    [[7240,1380],[7400,1380],[7300,1160],[7420,1180]],
+    [[7240,1300],[7240,1200],[7196,1222]],
+    [[6961,1041],[6931,1063]],
+    [[6961,1041],[6970,1034],[6970,1034],[6980,1027],[6994,1021],[7006,1017],[7021,1014],[7035,1013],[7047,1015],[7060,1019],[7073,1025],[7083,1034],[7089,1043]],
+    [[7420,1180],[7300,960],[7480,960],[7500,1000],[8160,1000],[8200,960],[8340,960]],
+    [[8340,960],[8420,1000],[8540,1000],[8540,680],[8660,680],[8660,440],[8760,440],[8760,160],[8820,160]],
+    [[6240,0],[6940,0]]
+  ],
+  elec:[[6400,760,6520,780]],
+  sticky:[[296,507,251,493],[6686,700,6820,700],[7320,960,7460,960]],
+  pits:[[2380,1220,5520,1220]],
+  ghost:[[902,929,974,975],[926,941,925,870],[6900,860,6600,660]],
+  water:[[[8200,960],[8160,1000],[7500,1000],[7480,960]],[[1760,1180],[1760,1220],[1270,1220],[1270,1180]]],
+  crosshairs:[{x:6620,y:1160}],
+  airplanes:[{x:2120,y:980}],
+  teleports:[{a:{x:6296,y:340},b:{x:6249,y:1333}}],
+  targets:[{x:8620,y:640,r:18},{x:8720,y:400,r:18}],
+  jump:true,
+  start:[280,480], hole:[8800,160] },
 ];
 
 // ═══════════════════════ AUDIO ═══════════════════════════
@@ -6831,6 +6876,7 @@ function startLevel() {
   jumpUsed = false; onGround = false; airFrames = 0; resetJumpBtn();
   skipCount = 0; waterSunk = false; bubbleT = 0;
   paraReset(); paraUsed.clear();
+  apReset(); apUsed.clear(); apHintFrames = 0; apGraceFrames = 0;
   aimBoostCount = 0; chPickedUp = new Set(); aimFlyAnim = null;
   const _ab = document.getElementById('aimBtn');
   if (_ab) { _ab.classList.remove('on','active','used','flash','multi'); }
@@ -7494,6 +7540,12 @@ const PARA_DRAG   = 0.88;    // згасання горизонталі коли
 const PARA_GRAB_R = 26;      // радіус зачеплення до кошика
 const PARA_CANOPY_OFF = 46;  // висота купола над кулею (рендер)
 
+// ═══════════════════════ AIRPLANE CONSTANTS ═══════════════════════
+const AP_GRAB_R   = 40;    // радіус зачеплення
+const AP_SPEED    = 5.5;   // пікселів/кадр
+const AP_FUEL_MAX = 600;   // кадрів польоту за замовчуванням
+const AP_TURN     = 0.045; // радіан/кадр повороту
+
 // ═══════════════════════ TELEPORT ═══════════════════════
 // Пари воріт: {a:{x,y}, b:{x,y}} — м'яч, що зайшов у a, миттєво з'являється біля b.
 // Величина швидкості зберігається; напрямок = нормалізований (vx,vy) на момент входу
@@ -7513,6 +7565,86 @@ function paraReset() {
   paraInput.L = false; paraInput.R = false;
   paraTouches.clear();
   paraMouseSide = null;
+}
+
+// ─── AIRPLANE STATE ───
+let apFlying = false, apFuel = 0, apFuelMax = AP_FUEL_MAX, apAngle = 0;
+let apInput = { L:false, R:false };
+let apHintFrames = 0, apGraceFrames = 0;
+const apTouches = new Map(); let apMouseSide = null;
+const apUsed = new Set();
+
+function apReset() {
+  apFlying = false; apFuel = 0;
+  apInput.L = false; apInput.R = false;
+  apTouches.clear(); apMouseSide = null;
+}
+function apTryAttach() {
+  if (apFlying) return false;
+  const lv = LEVELS[lvIdx];
+  if (!lv.airplanes || !lv.airplanes.length) return false;
+  for (let i = 0; i < lv.airplanes.length; i++) {
+    if (apUsed.has(i)) continue;
+    const pt = lv.airplanes[i];
+    const dx = ball.x - pt.x, dy = ball.y - pt.y;
+    if (dx*dx + dy*dy < (AP_GRAB_R + BALL_R) * (AP_GRAB_R + BALL_R)) {
+      apFlying = true; apUsed.add(i);
+      apFuelMax = (pt.fuel || 10) * 60;
+      apFuel = apFuelMax;
+      apAngle = pt.angle || 0;
+      apHintFrames = 180; apGraceFrames = 8;
+      apInput.L = false; apInput.R = false;
+      apTouches.clear(); apMouseSide = null;
+      trail = [];
+      return true;
+    }
+  }
+  return false;
+}
+function apTick() {
+  if (apHintFrames > 0) apHintFrames--;
+  if (apInput.L) apAngle -= AP_TURN;
+  if (apInput.R) apAngle += AP_TURN;
+  ball.vx = Math.cos(apAngle) * AP_SPEED;
+  ball.vy = Math.sin(apAngle) * AP_SPEED;
+  ball.x += ball.vx; ball.y += ball.vy;
+  apFuel--;
+  const lv = LEVELS[lvIdx];
+  if (ball.x < BALL_R || ball.x > lv.W - BALL_R || ball.y > lv.H - BALL_R) { apReset(); return; }
+  if (apGraceFrames <= 0) {
+    let wallHit = false;
+    for (const segs of lv.segments) {
+      if (!segs) continue;
+      for (let i = 0; i < segs.length - 1; i++) {
+        if (segCollide(segs[i][0], segs[i][1], segs[i+1][0], segs[i+1][1])) { wallHit = true; break; }
+      }
+      if (wallHit) break;
+    }
+    if (wallHit) { apReset(); return; }
+  }
+  if (apFuel <= 0) { apReset(); return; }
+  if (checkPits()) { apReset(); return; }
+  if (nearElec()) { checkElecWalls(); apReset(); return; }
+  checkCage(); checkTargets();
+}
+function apSteerDown(e) {
+  const halfW = window.innerWidth / 2;
+  if (e.touches) {
+    for (const t of e.changedTouches) {
+      const side = t.clientX < halfW ? 'L' : 'R';
+      apTouches.set(t.identifier, side); apInput[side] = true;
+    }
+  } else {
+    const side = e.clientX < halfW ? 'L' : 'R';
+    apMouseSide = side; apInput[side] = true;
+  }
+}
+function apSteerUp(e) {
+  if (e.touches) { for (const t of e.changedTouches) apTouches.delete(t.identifier); }
+  else apMouseSide = null;
+  apInput.L = false; apInput.R = false;
+  for (const side of apTouches.values()) apInput[side] = true;
+  if (apMouseSide) apInput[apMouseSide] = true;
 }
 function paraTryAttach() {
   if (paraAttachedIdx >= 0) return false;
@@ -7673,6 +7805,28 @@ function tick() {
 
   const lv = LEVELS[lvIdx];
 
+  // ── AIRPLANE MODE: повністю замінює стандартну фізику ──
+  if (apFlying) {
+    apTick();
+    if (apGraceFrames > 0) apGraceFrames--;
+    const spd0a = Math.sqrt(ball.vx*ball.vx + ball.vy*ball.vy);
+    if (spd0a > 0.5) trail.push({x:ball.x, y:ball.y});
+    else if (trail.length) trail.shift();
+    if (trail.length > 70) trail.shift();
+    const lv_a = LEVELS[lvIdx];
+    const [hxA, hyA] = lv_a.hole;
+    const ddxA = ball.x - hxA, ddyA = ball.y - hyA;
+    if (cageOpen && Math.sqrt(ddxA*ddxA + ddyA*ddyA) < HOLE_R * 0.8) {
+      win = true; winTimer = 150;
+      spawnConfetti(hxA, hyA);
+      SFX.goal();
+      showMsg(resultText());
+      onLevelComplete();
+      apReset();
+    }
+    return;
+  }
+
   // ── PARACHUTE MODE: повністю замінює стандартну фізику ──
   if (paraAttachedIdx >= 0) {
     paraTick();
@@ -7741,7 +7895,8 @@ function tick() {
     // Перетин поверхні води: stone-skipping або занурення
     if (checkWaterSurface(_px, _py)) break;
 
-    // Зачеплення за парашут перериває substep-цикл
+    // Зачеплення за літак або парашут перериває substep-цикл
+    if (apTryAttach()) break;
     if (paraTryAttach()) break;
 
     // Липка стіна — доторк ловить мʼяч, перериває substep
@@ -8280,6 +8435,7 @@ function render() {
   rElecWalls();
   rStickyWalls();
   rParachutes();
+  rAirplanes();
   rTeleports();
   rCrosshairPickups();
   rHole();
@@ -8290,6 +8446,7 @@ function render() {
   rParticles();
 
   ctx.restore();
+  if (apFlying) { rFuelBar(); rApHint(); }
   rAim();  // screen space
   rAimFlyAnim(); // flying icon animation
   ctx.restore();
@@ -8770,6 +8927,128 @@ function drawCanopy(cx, cy, active) {
 }
 
 // ═══════════════════════ TELEPORT RENDER ═══════════════════════
+
+// ═══════════════════════ AIRPLANE RENDER ═══════════════════════
+function drawAirplaneAt(cx, cy, angle, glow) {
+  const propAngle = (performance.now()/300) % (Math.PI*2);
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(angle);
+  if (glow) { ctx.shadowColor = 'rgba(255,80,30,0.7)'; ctx.shadowBlur = 18; }
+  // ХВІСТ
+  ctx.fillStyle = '#cc1f2e';
+  ctx.beginPath(); ctx.moveTo(-16,-2); ctx.lineTo(-20,-3);
+  ctx.bezierCurveTo(-24,-4,-28,-8,-26,-12); ctx.bezierCurveTo(-24,-15,-20,-13,-18,-9);
+  ctx.lineTo(-16,-6); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-16,2); ctx.lineTo(-20,3);
+  ctx.bezierCurveTo(-24,4,-28,8,-26,12); ctx.bezierCurveTo(-24,15,-20,13,-18,9);
+  ctx.lineTo(-16,6); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#aa1525';
+  ctx.beginPath(); ctx.moveTo(-14,-2); ctx.bezierCurveTo(-18,-3,-25,-4,-26,-2);
+  ctx.bezierCurveTo(-27,0,-26,2,-25,2); ctx.bezierCurveTo(-24,4,-18,3,-14,2);
+  ctx.closePath(); ctx.fill();
+  // КРИЛА
+  ctx.fillStyle = '#dd1f2d';
+  ctx.beginPath(); ctx.moveTo(2,-7); ctx.lineTo(6,-7);
+  ctx.bezierCurveTo(8,-7,6,-26,2,-28); ctx.bezierCurveTo(-2,-30,-10,-28,-12,-24);
+  ctx.lineTo(-8,-10); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(2,7); ctx.lineTo(6,7);
+  ctx.bezierCurveTo(8,7,6,26,2,28); ctx.bezierCurveTo(-2,30,-10,28,-12,24);
+  ctx.lineTo(-8,10); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#ffaa22';
+  ctx.beginPath(); ctx.moveTo(4,-22); ctx.bezierCurveTo(6,-26,4,-30,0,-29);
+  ctx.bezierCurveTo(-6,-28,-11,-26,-12,-23); ctx.lineTo(-6,-21); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(4,22); ctx.bezierCurveTo(6,26,4,30,0,29);
+  ctx.bezierCurveTo(-6,28,-11,26,-12,23); ctx.lineTo(-6,21); ctx.closePath(); ctx.fill();
+  // ФЮЗЕЛЯЖ
+  ctx.fillStyle = '#ee1f2d';
+  ctx.beginPath(); ctx.ellipse(0,0,22,9,0,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle = '#aa1020'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(0,1,20,7,0,0,Math.PI*2); ctx.stroke();
+  // КАБІНА
+  ctx.fillStyle = '#1a4db5';
+  ctx.beginPath(); ctx.ellipse(3,0,8,6,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = 'rgba(180,220,255,0.6)';
+  ctx.beginPath(); ctx.ellipse(3,0,6,4.5,0,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle = '#aa1020'; ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.moveTo(-2,0); ctx.lineTo(8,0); ctx.stroke();
+  // ПРОПЕЛЕР
+  ctx.save(); ctx.translate(22,0); ctx.rotate(propAngle);
+  ctx.fillStyle = '#ffaa22';
+  ctx.beginPath(); ctx.moveTo(0,0);
+  ctx.bezierCurveTo(-3,-3,-4,-8,-2,-12); ctx.bezierCurveTo(0,-14,3,-12,2,-8);
+  ctx.bezierCurveTo(1,-4,2,-1,0,0); ctx.closePath(); ctx.fill();
+  ctx.save(); ctx.rotate(Math.PI);
+  ctx.beginPath(); ctx.moveTo(0,0);
+  ctx.bezierCurveTo(-3,-3,-4,-8,-2,-12); ctx.bezierCurveTo(0,-14,3,-12,2,-8);
+  ctx.bezierCurveTo(1,-4,2,-1,0,0); ctx.closePath(); ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = '#cc8800'; ctx.beginPath(); ctx.arc(0,0,3.5,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#ffcc44'; ctx.beginPath(); ctx.arc(0,0,1.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+function rAirplanes() {
+  const lv = LEVELS[lvIdx];
+  if (!lv.airplanes || !lv.airplanes.length) return;
+  const tAnim = Date.now() / 800;
+  for (let i = 0; i < lv.airplanes.length; i++) {
+    if (apUsed.has(i)) continue;
+    const pt = lv.airplanes[i];
+    const hover = Math.sin(tAnim + i) * 3;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,100,50,0.35)'; ctx.setLineDash([3,4]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(pt.x, pt.y, AP_GRAB_R, 0, Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+    drawAirplaneAt(pt.x, pt.y + hover, pt.angle || 0, false);
+  }
+  if (apFlying && ball) drawAirplaneAt(ball.x, ball.y, apAngle, true);
+}
+function rApHint() {
+  if (!apFlying) return;
+  ctx.save();
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.globalAlpha = 0.82;
+  ctx.font = 'bold 18px monospace';
+  ctx.textBaseline = 'middle';
+  const lActive = apInput.L;
+  ctx.fillStyle = lActive ? '#ffffff' : 'rgba(255,255,255,0.55)';
+  ctx.shadowColor = lActive ? '#00ccff' : 'transparent';
+  ctx.shadowBlur = lActive ? 14 : 0;
+  ctx.textAlign = 'left';
+  ctx.fillText('◄ LEFT', W * 0.08, H / 2);
+  const rActive = apInput.R;
+  ctx.fillStyle = rActive ? '#ffffff' : 'rgba(255,255,255,0.55)';
+  ctx.shadowColor = rActive ? '#00ccff' : 'transparent';
+  ctx.shadowBlur = rActive ? 14 : 0;
+  ctx.textAlign = 'right';
+  ctx.fillText('RIGHT ►', W * 0.92, H / 2);
+  ctx.restore();
+}
+function rFuelBar() {
+  const pct = apFuel / apFuelMax;
+  const bw = Math.min(W * 0.35, 160), bh = 7;
+  const bx = (W - bw) / 2, by = 18;
+  ctx.save();
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(bx, by, bw, bh);
+  const grad = ctx.createLinearGradient(bx, 0, bx + bw, 0);
+  grad.addColorStop(0, '#ff4400');
+  grad.addColorStop(0.5, '#ffaa00');
+  grad.addColorStop(1, '#00ff88');
+  ctx.fillStyle = grad;
+  ctx.fillRect(bx, by, bw * pct, bh);
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bx, by, bw, bh);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '8px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('FUEL', bx + bw / 2, by + bh + 2);
+  ctx.restore();
+}
 function rTeleports() {
   const lv = LEVELS[lvIdx];
   if (!lv.teleports || !lv.teleports.length) return;
@@ -9692,6 +9971,7 @@ cv.addEventListener('touchcancel', (e) => {
     gamePinch = null;
     if (gamePinchRAF != null) { cancelAnimationFrame(gamePinchRAF); gamePinchRAF = null; }
   }
+  if (apFlying) { apSteerUp(e); return; }
   if (paraAttachedIdx >= 0) { paraSteerUp(e); return; }
   drag = false; endFreeLook();
 }, {passive:false});
@@ -9761,6 +10041,7 @@ function onDown(e) {
     return;
   }
   if (introCam) { finishIntroCam(); return; }   // intro грає — тап скіпає
+  if (apFlying) { apSteerDown(e); return; }                  // у літаку — кермуємо тапами
   if (paraAttachedIdx >= 0) { paraSteerDown(e); return; }   // на парашуті — кермуємо тапами
   // Мʼяч рухається: тап будь-де = Flappy-стрибок (лише якщо доступний — у повітрі)
   if (ball && !win && isMoving()) {
@@ -9829,6 +10110,7 @@ function onUp(e) {
     gamePinch = null;
     return;
   }
+  if (apFlying) { apSteerUp(e); return; }
   if (paraAttachedIdx >= 0) { paraSteerUp(e); return; }
   if (!drag) return;
   drag = false;
